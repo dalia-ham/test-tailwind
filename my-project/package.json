@@ -4,12 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "vite", 
     "dev": "vite",
     "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
+    "fabric": "^6.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0"

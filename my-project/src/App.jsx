@@ -9,6 +9,7 @@ import Credentials from './pages/Credintials';
 import Designs from './pages/Designs';
 import Emails from './pages/Emails';
 import Groups from './pages/Groups';
+import SignUp from './pages/SignUp';
 import Integrations from './pages/Integrations';
 import Pathways from './pages/Pathways';
 function App() {
@@ -28,8 +29,11 @@ function App() {
           <Route path="/Groups" element={<Groups />} />
           <Route path="/Integrations" element={<Integrations />} />
           <Route path="/Pathways" element={<Pathways />} />
+          <Route path="/SignUp" element={<SignUp />} />
+
+
         </Routes>
-    <h1 className="text-3xl font-bold underline text-amber-400">
+    <h1 className="text-3xl font-bold underline text-amber-500">
      
     </h1>
      </>
