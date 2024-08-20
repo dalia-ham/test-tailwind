@@ -8,8 +8,8 @@ function Designs() {
   useEffect(() => {
     // إنشاء اللوحة (canvas) عند تحميل المكون
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: 800,
-      height: 600,
+      width: 800,  // زيادة العرض ليتناسب مع المحتوى
+      height: 600, // زيادة الارتفاع ليتناسب مع المحتوى
       backgroundColor: '#f3f3f3', // لون خلفية الشهادة
     });
 
@@ -56,7 +56,6 @@ function Designs() {
       });
     };
 
-    // إضافة صورة (يمكن تعديل هذا الرابط أو رفع صور جديدة)
     addImage('https://via.placeholder.com/150');
 
     // تمكين الحفظ كصورة
@@ -71,20 +70,20 @@ function Designs() {
       link.click();
     };
 
-    // إتاحة زر لحفظ الشهادة كصورة
     document.getElementById('save-btn').addEventListener('click', saveCanvasAsImage);
     
-    // تنظيف اللوحة عند إلغاء التثبيت
     return () => {
       canvas.dispose();
     };
   }, []);
 
   return (
-    <div>
-      <h1>مصمم الشهادات</h1>
-      <canvas ref={canvasRef} id="canvas" />
-      <button id="save-btn" className="bg-blue-500 text-white px-4 py-2 rounded mt-4">حفظ الشهادة</button>
+    <div className="p-4"> {/* إضافة مسافة داخلية عامة */}
+      <h1 className="text-2xl font-bold mb-6">مصمم الشهادات</h1> {/* إضافة مسافة أسفل العنوان */}
+      <canvas ref={canvasRef} id="canvas" className="border border-gray-300" />
+      <button id="save-btn" className="bg-blue-500 text-white px-4 py-2 rounded mt-6"> {/* إضافة مسافة أعلى الزر */}
+        حفظ الشهادة
+      </button>
     </div>
   );
 }

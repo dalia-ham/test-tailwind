@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import MyForm from '../components/GroupForm';
 
 function Pathways() {
-  const { id } = useParams(); // استخدام useParams لالتقاط المعرف من الرابط
+  const { id } = useParams(); 
 
   return (
     <>

@@ -45,6 +45,7 @@
 // src/App.jsx// src/App.jsx
 
 // import './App.css';// src/App.jsx
+
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/home';
@@ -57,9 +58,8 @@ import SignUp from './pages/SignUp';
 import Integrations from './pages/Integrations';
 import Pathways from './pages/Pathways';
 import CertificateEditor from './pages/CertificateEditor';
-// eslint-disable-next-line no-unused-vars
-import credantial2 from './pages/credantial2';
-import CreateCredentials from './pages/create_credentials';
+import CredentialForm from './pages/credantial2';  // تأكد من استخدام الاسم الصحيح
+
 function App() {
   return (
     <>
@@ -75,14 +75,8 @@ function App() {
         <Route path="/Integrations" element={<Integrations />} />
         <Route path="/Pathways" element={<Pathways />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/CredentialDetails" element={<create_credentials />} />
-        <Route path="/credantial2" element={<credantial2 />} />
-        <Route path="/create_credentials" element={<create_credentials />} />
+        <Route path="/CredentialForm" element={<CredentialForm />} />  {}
         <Route path="/pathways/:id" element={<Pathways />} />
-
-
-
-
       </Routes>
       <h1 className="text-3xl font-bold underline text-amber-500"></h1>
     </>

@@ -42,7 +42,7 @@ const CertificateEditor = () => {
   // Load background image
   useEffect(() => {
     const img = new window.Image();
-    img.src = '/cer.png'; // Path to your background image
+    img.src = '/cerd.png'; 
     img.onload = () => setBackgroundImage(img);
     img.onerror = () => console.error('Failed to load image');
   }, []);
