@@ -1,11 +1,12 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
 
-const MyForm = () => {
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
+
+const CredentialForm = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col p-4">
       {/* Top Section */}
-      <div className="bg-white shadow p-4 mb-4 mt-8">
+      <div className="bg-white shadow p-4 mb-4">
         <h1 className="text-2xl font-semibold">Credential 108809486</h1>
         <div className="text-sm text-blue-600 mt-2">
           <span>This credential is Unpublished.</span>
@@ -99,4 +100,7 @@ const MyForm = () => {
   );
 };
 
-export default MyForm;
+export default CredentialForm;
+
+
+

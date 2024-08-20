@@ -32,6 +32,7 @@ const CertificateEditor = () => {
   const [selectedFontFamily, setSelectedFontFamily] = useState('Arial');
   const [selectedFontWeight, setSelectedFontWeight] = useState('normal');
   const [selectedFontStyle, setSelectedFontStyle] = useState('normal');
+  // eslint-disable-next-line no-unused-vars
   const [selectedSize, setSelectedSize] = useState('A4');
   const [scale, setScale] = useState(1);
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -107,6 +108,7 @@ const CertificateEditor = () => {
   };
 
   // Handle text delete
+  // eslint-disable-next-line no-unused-vars
   const handleDelete = (id) => {
     setTextItems(textItems.filter((item) => item.id !== id));
     setSelectedTextId(null);

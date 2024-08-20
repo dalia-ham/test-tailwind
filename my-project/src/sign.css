@@ -1,99 +1,100 @@
 /* sign.css */
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url("cer3.jpg") no-repeat center center fixed;
-    background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("cer3.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .signupPage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .signupForm {
-    border: 1px solid black;
-    width: 400px;
-    background: rgba(238, 211, 36, 0.829); /* Gold color with transparency */
-    color: rgb(9, 9, 9);
-    border-radius: 20px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, .75);
-    overflow: hidden;
-    padding: 20px;
-    box-sizing: border-box;
+  border: 1px solid black;
+  width: 400px;
+  background: rgba(238, 211, 36, 0.829); /* Gold color with transparency */
+  color: rgb(9, 9, 9);
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 h1 {
-    font-weight: normal;
-    font-size: 24px;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-    margin-bottom: 15px; /* Reduced space between the title and the rest of the form */
-    text-align: center;
+  font-weight: normal;
+  font-size: 24px;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px; /* Reduced space between the title and the rest of the form */
+  text-align: center;
 }
 
 label {
-    color: rgba(4, 4, 4, 0.8);
-    text-transform: uppercase;
-    font-size: 12px;
-    font-family: normal;
-    letter-spacing: 1px; /* Reduced letter spacing */
-    padding-left: 5px; /* Reduced left padding */
+  color: rgba(4, 4, 4, 0.8);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: normal;
+  letter-spacing: 1px; /* Reduced letter spacing */
+  padding-left: 5px; /* Reduced left padding */
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    background: rgba(255, 255, 255, .3);
-    height: 35px; /* Reduced height */
-    line-height: 35px;
-    border-radius: 15px; /* Reduced border-radius */
-    padding: 0px 15px; /* Reduced internal padding */
-    border: none;
-    margin-bottom: 10px; /* Reduced bottom margin */
-    color: rgb(10, 9, 9);
-    width: calc(100% - 30px); /* Ensure width fits with padding */
+  background: rgba(255, 255, 255, 0.3);
+  height: 35px; /* Reduced height */
+  line-height: 35px;
+  border-radius: 15px; /* Reduced border-radius */
+  padding: 0px 15px; /* Reduced internal padding */
+  border: none;
+  margin-bottom: 10px; /* Reduced bottom margin */
+  color: rgb(10, 9, 9);
+  width: calc(100% - 30px); /* Ensure width fits with padding */
 }
 
 input[type="radio"] {
-    margin-right: 3px; /* Reduced space between radio button and text */
+  margin-right: 3px; /* Reduced space between radio button and text */
 }
 
-button :hover{
-    background: rgb(6, 7, 6);
-    height: 35px; /* Reduced button height */
-    line-height: 35px;
-    border-radius: 20px; /* Reduced border-radius */
-    border: none;
-    margin: 5px 0px; /* Reduced top and bottom margin */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    color: white;
-    cursor: pointer;
-    width: 100%;
-     filter: drop-shadow(0 0 5px green);
+button :hover {
+  background: rgb(6, 7, 6);
+  height: 35px; /* Reduced button height */
+  line-height: 35px;
+  border-radius: 20px; /* Reduced border-radius */
+  border: none;
+  margin: 5px 0px; /* Reduced top and bottom margin */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  filter: drop-shadow(0 0 5px green);
   background-color: rgb(10, 114, 20);
 }
 
 div {
-    margin-bottom: 2px; /* Reduced space between divs */
+  margin-bottom: 2px; /* Reduced space between divs */
 }
 
 .signupForm label {
-    display: block;
-    margin-bottom: 1px; /* Reduced space between label and fields */
+  display: block;
+  margin-bottom: 1px; /* Reduced space between label and fields */
 }
 
 .signupForm input[type="radio"] {
-    margin-right: 1px; /* Reduced space between radio button and text */
+  margin-right: 1px; /* Reduced space between radio button and text */
 }

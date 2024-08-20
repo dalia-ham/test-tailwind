@@ -65,7 +65,7 @@ function CredentialButtons() {
 
     return (
         <div className="flex flex-col items-center h-screen bg-cover bg-center bg-no-repeat bg-gray-100" style={{ backgroundImage: 'url(/background0.jpg)' }}>
-            <h1 className="text-6xl font-cursive mb-4 text-gray-800 mt-16">Credential</h1>
+            <h1 className="text-xl font-cursive mb-4 text-gray-800 mt-16">Credential</h1>
             <input
                 type="text"
                 placeholder="Search..."

@@ -57,7 +57,9 @@ import SignUp from './pages/SignUp';
 import Integrations from './pages/Integrations';
 import Pathways from './pages/Pathways';
 import CertificateEditor from './pages/CertificateEditor';
-
+// eslint-disable-next-line no-unused-vars
+import credantial2 from './pages/credantial2';
+import CreateCredentials from './pages/create_credentials';
 function App() {
   return (
     <>
@@ -73,6 +75,14 @@ function App() {
         <Route path="/Integrations" element={<Integrations />} />
         <Route path="/Pathways" element={<Pathways />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/CredentialDetails" element={<create_credentials />} />
+        <Route path="/credantial2" element={<credantial2 />} />
+        <Route path="/create_credentials" element={<create_credentials />} />
+        <Route path="/pathways/:id" element={<Pathways />} />
+
+
+
+
       </Routes>
       <h1 className="text-3xl font-bold underline text-amber-500"></h1>
     </>

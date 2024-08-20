@@ -1,92 +1,92 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url("/background0.jpg") no-repeat center center fixed;
-    background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("/background0.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .Regestration {
-    border: 1px solid black;
-    width: 400px;
-    height: 500px;
-    background: rgb(255, 217, 0); 
-    color: rgb(9, 9, 9);
-    border-radius: 20px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, .75);
-    overflow: hidden;
+  border: 1px solid black;
+  width: 400px;
+  height: 500px;
+  background: rgb(255, 217, 0);
+  color: rgb(9, 9, 9);
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
 }
 
-
 form {
-    display: flex;
-    box-sizing: border-box;
-    padding: 40px;
-    width: 100%;
-    height: 100%;
-    -webkit-backdrop-filter: brightness(40%);
-    flex-direction: column;
-    gap: 5px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: brightness(40%);
+  flex-direction: column;
+  gap: 5px;
 }
 
 h1 {
-    font-weight: normal;
-    font-size: 24px;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-    margin-bottom: 60px;
+  font-weight: normal;
+  font-size: 24px;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 60px;
 }
 
 label {
-    color: rgba(4, 4, 4, 0.8);
-    text-transform: uppercase;
-    font-size: 12px;
-    font-family: normal;
-    letter-spacing: 2px;
-    padding-left: 10px;
+  color: rgba(4, 4, 4, 0.8);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: normal;
+  letter-spacing: 2px;
+  padding-left: 10px;
 }
 
 input {
-    background: rgba(255, 255, 255, .3);
-    height: 40px;
-    line-height: 40px;
-    border-radius: 20px;
-    padding: 0px 20px;
-    border: none;
-    margin-bottom: 20px;
-    color: rgb(10, 9, 9);
+  background: rgba(255, 255, 255, 0.3);
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding: 0px 20px;
+  border: none;
+  margin-bottom: 20px;
+  color: rgb(10, 9, 9);
 }
 
 button {
-    background: rgb(6, 7, 6);
-    height: 40px;
-    line-height: 40px;
-    border-radius: 40px;
-    border: none;
-    margin: 10px 0px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    color: white;
-    cursor: pointer;
+  background: rgb(6, 7, 6);
+  height: 40px;
+  line-height: 40px;
+  border-radius: 40px;
+  border: none;
+  margin: 10px 0px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
 }
 .checkbox-container {
-    display: flex;
-    align-items: center; /* لتوسيط العناصر عموديًا */
-    gap: 5px; /* المسافة بين الـ checkbox والنص */
-    color: rgba(4, 4, 4, 0.8);
-    font-size: 14px;
+  display: flex;
+  align-items: center; /* لتوسيط العناصر عموديًا */
+  gap: 5px; /* المسافة بين الـ checkbox والنص */
+  color: rgba(4, 4, 4, 0.8);
+  font-size: 14px;
 }
 
 .checkbox-container input[type="checkbox"] {
-    width: 15px; /* عرض أصغر للـ checkbox */
-    height: 15px; /* ارتفاع أصغر للـ checkbox */
+  width: 15px; /* عرض أصغر للـ checkbox */
+  height: 15px; /* ارتفاع أصغر للـ checkbox */
 }
 
 .checkbox-container label {
-    margin: 0;
+  margin: 0;
 }

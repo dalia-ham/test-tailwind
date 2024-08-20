@@ -20,7 +20,8 @@ function Home() {
 
   // Function to handle the click and navigate to the details page
   const handleOpen = (id) => {
-    navigate(`/credential/${id}`);
+    console.log(`Navigating to /pathways/${id}`); // تحقق من أن المعرف يتم تمريره بشكل صحيح
+    navigate(`/pathways/${id}`);
   };
 
   // Filter credentials based on search query
@@ -182,7 +183,7 @@ function Home() {
                 <td className="py-2 px-4">{credential.expiryDate}</td>
                 <td className="py-2 px-4">
                   <button
-                    onClick={() => handleOpen(credential.id)}
+                    onClick={() => handleOpen(credential.id)} // تمرير المعرف بشكل صحيح
                     className="bg-black text-white px-4 py-1 rounded-md text-sm"
                   >
                     Open
@@ -225,12 +226,7 @@ function Home() {
 
           {/* Modal Content */}
           <div>
-            {modalContent === 'Single Credentials' && (
-              <p className="mb-6">This is the dialog for Single Credentials. You can add additional content here.</p>
-            )}
-            {modalContent === 'Multiple Credentials' && (
-              <p className="mb-6">This is the dialog for Multiple Credentials. You can add additional content here.</p>
-            )}
+            <p>{modalContent}</p>
           </div>
         </div>
       </Modal>
