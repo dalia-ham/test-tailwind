@@ -76,14 +76,14 @@ function Home() {
       {/* Buttons inside the top bar */}
       <div className="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
         <div className="flex space-x-2">
-          <select className="bg-green-500 text-white px-4 py-2 rounded-md text-sm">
+          <select className="bg-green-800 text-white px-4 py-2 rounded-md text-sm">
             <option>Update Credentials</option>
             <option>Multiple Group</option>
           </select>
 
           {/* Dropdown for Create Credentials */}
           <select 
-            className="bg-green-600 text-white px-4 py-2 rounded-md text-sm"
+            className="bg-green-800 text-white px-4 py-2 rounded-md text-sm"
             onChange={handleSelectChange} // Handle option change
           >
             <option value="" disabled selected>Create Credentials</option> {/* Keep it fixed */}
@@ -130,7 +130,7 @@ function Home() {
         {/* Delete Selected Button */}
         <button
           onClick={handleDelete}
-          className="bg-red-600 text-white px-6 py-2 rounded-md shadow-lg hover:bg-red-700 transition-colors"
+          className="bg-green-800 text-white px-6 py-2 rounded-md shadow-lg hover:bg-red-500 transition-colors"
           disabled={selectedCredentials.length === 0}
         >
           Delete Selected

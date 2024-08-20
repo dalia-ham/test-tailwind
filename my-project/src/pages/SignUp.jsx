@@ -29,7 +29,7 @@ const SignUp = () => {
 
     // Reset the error message and navigate to the credentials page
     setErrorMessage('');
-    navigate('/Credintials');
+    navigate('/Groups');
   };
 
   return (

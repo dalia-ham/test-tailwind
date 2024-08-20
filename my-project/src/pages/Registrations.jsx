@@ -9,7 +9,7 @@ function Contact() {
     e.preventDefault(); // Prevent page reload on form submission
 
     // Navigate to "Credentials" page on form submit
-    navigate('/Credintials'); // Navigate to credentials page
+    navigate('/Groups'); // Navigate to credentials page
   };
 
   return (
