@@ -60,7 +60,7 @@ function CredentialButtons() {
 
     // Handle credential button click
     const handleCredentialClick = () => {
-        navigate('/Pathways'); // Navigate to GroupForm page
+        navigate('/Emails'); // Navigate to GroupForm page
     };
 
     return (

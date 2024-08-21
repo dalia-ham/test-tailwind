@@ -15,9 +15,11 @@ function Navbar() {
           <li>
             <Link to="/" className="text-white hover:text-cyan-300">Home</Link>
           </li>
+          
           <li>
-            <Link to="/Credintials" className="text-white hover:text-cyan-300"></Link>
+            <Link to="/Credintials" className="text-white hover:text-cyan-300">22</Link>
           </li>
+          
           <li>
             <Link to="/Designs" className="text-white hover:text-cyan-300">Designs</Link>
           </li>
@@ -28,7 +30,7 @@ function Navbar() {
             <Link to="/Groups" className="text-white hover:text-cyan-300">Groups</Link>
           </li>
           <li>
-            <Link to="/Integrations" className="text-white hover:text-cyan-300"></Link>
+            <Link to="/Integrations" className="text-white hover:text-cyan-300">hi</Link>
           </li>
           <li>
             <Link to="/Pathways" className="text-white hover:text-cyan-300"></Link>

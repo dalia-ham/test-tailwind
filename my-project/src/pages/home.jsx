@@ -64,7 +64,7 @@ function Home() {
 
   // Handle navigation to create credential page
   const handleCreateCredential = () => {
-    navigate('/Emails'); // Navigate to the create credential page
+    navigate('/Groups'); // Navigate to the create credential page
   };
 
   // Close the modal
