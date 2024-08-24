@@ -1,371 +1,345 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useRef, useEffect } from 'react';
-import { Stage, Layer, Text, Image, Transformer } from 'react-konva';
-import { useFormik } from 'formik';
+/* eslint-disable no-unused-vars */
+import React, { useState, useRef } from 'react';
+import { Rnd } from 'react-rnd'; // مكتبة لتحريك وتغيير حجم العناصر
+import html2canvas from 'html2canvas'; // مكتبة لحفظ الصورة كـ JPG
+import QRCode from 'qrcode.react'; // مكتبة لإنشاء رموز QR
 
-const MM_TO_PX = 3.7795275591; // Conversion factor from mm to px
-
-const sizes = {
-  A4: { width: 297, height: 210 },
-  A3: { width: 420, height: 297 },
-  A2: { width: 594, height: 420 }
-};
-
-const fonts = [
-  'Arial',
-  'Courier New',
-  'Georgia',
-  'Times New Roman',
-  'Verdana',
-  'Comic Sans MS',
-  'Impact',
-  'Trebuchet MS',
-  'Lucida Console'
-];
-
-const CertificateEditor = () => {
-  const [textItems, setTextItems] = useState([]);
-  const [imageItems, setImageItems] = useState([]);
-  const [selectedTextId, setSelectedTextId] = useState(null);
-  const [selectedImageId, setSelectedImageId] = useState(null);
-  const [selectedColor, setSelectedColor] = useState('black');
-  const [selectedFontSize, setSelectedFontSize] = useState(20);
-  const [selectedFontFamily, setSelectedFontFamily] = useState('Arial');
-  const [selectedFontWeight, setSelectedFontWeight] = useState('normal');
-  const [selectedFontStyle, setSelectedFontStyle] = useState('normal');
-  // eslint-disable-next-line no-unused-vars
-  const [selectedSize, setSelectedSize] = useState('A4');
+const CertificateDesigner = () => {
+  const [textElements, setTextElements] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [scale, setScale] = useState(1);
-  const [backgroundImage, setBackgroundImage] = useState(null);
-  const stageRef = useRef(null);
-  const transformerRef = useRef(null);
+  const [logo, setLogo] = useState(null);
+  const [qrCodeText, setQrCodeText] = useState('');
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [selectedTextIndex, setSelectedTextIndex] = useState(null);
+  const [editingTextIndex, setEditingTextIndex] = useState(null); 
+  const [textInput, setTextInput] = useState('');
+  const [fontSize, setFontSize] = useState('24px');
+  const [color, setColor] = useState('#000000');
+  const [fontFamily, setFontFamily] = useState('Arial');
+  const [fontWeight, setFontWeight] = useState('normal');
+  const [fontStyle, setFontStyle] = useState('normal');
+  const certificateAreaRef = useRef(null); // 
 
-  // Load background image
-  useEffect(() => {
-    const img = new window.Image();
-    img.src = '/4.png'; 
-    img.onload = () => setBackgroundImage(img);
-    img.onerror = () => console.error('Failed to load image');
-  }, []);
-
-  // Formik form for text input
-  const formik = useFormik({
-    initialValues: {
-      text: '',
-    },
-    onSubmit: (values) => {
-      const stage = stageRef.current;
-      const pointerPosition = stage.getPointerPosition();
-
-      if (selectedTextId) {
-        // Update existing text item
-        setTextItems((items) =>
-          items.map((item) =>
-            item.id === selectedTextId
-              ? { ...item, text: values.text, fill: selectedColor, fontSize: selectedFontSize, fontFamily: selectedFontFamily, fontWeight: selectedFontWeight, fontStyle: selectedFontStyle }
-              : item
-          )
-        );
-        setSelectedTextId(null);
-      } else {
-        // Add new text item
-        const newItem = {
-          id: Date.now(),
-          text: values.text,
-          x: (pointerPosition.x / scale),
-          y: (pointerPosition.y / scale),
-          fontSize: selectedFontSize,
-          fill: selectedColor,
-          fontFamily: selectedFontFamily,
-          fontWeight: selectedFontWeight,
-          fontStyle: selectedFontStyle,
-        };
-        setTextItems([...textItems, newItem]);
-      }
-      formik.resetForm();
-    },
-  });
-
-  // Handle text click for editing
-  const handleTextClick = (id) => {
-    const selectedItem = textItems.find((item) => item.id === id);
-    formik.setFieldValue('text', selectedItem.text);
-    setSelectedTextId(id);
-    setSelectedColor(selectedItem.fill);
-    setSelectedFontSize(selectedItem.fontSize);
-    setSelectedFontFamily(selectedItem.fontFamily);
-    setSelectedFontWeight(selectedItem.fontWeight);
-    setSelectedFontStyle(selectedItem.fontStyle);
+  const handleAddText = () => {
+    if (textInput) {
+      setTextElements([
+        ...textElements,
+        { text: textInput, fontSize, color, fontFamily, fontWeight, fontStyle, x: 50, y: 50 }
+      ]);
+      setTextInput(''); // Clear input after adding
+    }
   };
 
-  // Handle drag end event
-  const handleDragEnd = (id, e) => {
-    const { x, y } = e.target.position();
-    setTextItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, x: x / scale, y: y / scale } : item
-      )
-    );
+  const handleZoom = (inOrOut) => {
+    setScale(prevScale => (inOrOut === 'in' ? prevScale + 0.1 : Math.max(prevScale - 0.1, 0.1)));
   };
 
-  // Handle text delete
-  // eslint-disable-next-line no-unused-vars
-  const handleDelete = (id) => {
-    setTextItems(textItems.filter((item) => item.id !== id));
-    setSelectedTextId(null);
-  };
-
-  // Handle image upload
-  const handleImageUpload = (e) => {
+  const handleLogoUpload = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const img = new window.Image();
-      img.src = reader.result;
-      img.onload = () => {
-        const stage = stageRef.current;
-        const pointerPosition = stage.getPointerPosition();
-
-        setImageItems((items) => [
-          ...items,
-          {
-            id: Date.now(),
-            image: img,
-            x: (pointerPosition.x / scale),
-            y: (pointerPosition.y / scale),
-            width: 100,
-            height: 100,
-          },
-        ]);
-      };
-    };
     if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setLogo(event.target.result);
+      };
       reader.readAsDataURL(file);
     }
   };
 
-  // Handle image click for editing
-  const handleImageClick = (id) => {
-    setSelectedImageId(id);
+  const handleQRCodeTextChange = (e) => {
+    setQrCodeText(e.target.value);
+    setShowQRCode(e.target.value.trim() !== '');
   };
 
-  // Handle image drag end event
-  const handleImageDragEnd = (id, e) => {
-    const { x, y } = e.target.position();
-    setImageItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, x: x / scale, y: y / scale } : item
-      )
-    );
+  const handleSaveCertificate = () => {
+    if (certificateAreaRef.current) {
+      html2canvas(certificateAreaRef.current).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'certificate.jpg';
+        link.href = canvas.toDataURL('image/jpeg');
+        link.click();
+      });
+    }
   };
 
-  // Handle image size change
-  const handleImageResize = (id, width, height) => {
-    setImageItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, width, height } : item
-      )
-    );
+  const handleTextClick = (index) => {
+    if (editingTextIndex === null) {
+      setEditingTextIndex(index);
+      const element = textElements[index];
+      setTextInput(element.text);
+      setFontSize(element.fontSize);
+      setColor(element.color);
+      setFontFamily(element.fontFamily);
+      setFontWeight(element.fontWeight);
+      setFontStyle(element.fontStyle);
+    }
   };
 
-  // Handle scale change
-  const handleScaleChange = (scaleChange) => {
-    setScale((prevScale) => Math.max(0.1, Math.min(3, prevScale + scaleChange)));
+  const handleTextInputChange = (e) => {
+    setTextInput(e.target.value);
   };
 
-  // Save the canvas as an image
-  const handleSave = () => {
-    const uri = stageRef.current.toDataURL();
-    const link = document.createElement('a');
-    link.href = uri;
-    link.download = 'certificate.png';
-    link.click();
+  const handleUpdateText = () => {
+    if (editingTextIndex !== null) {
+      const updatedTextElements = textElements.map((element, index) =>
+        index === editingTextIndex
+          ? { ...element, text: textInput, fontSize, color, fontFamily, fontWeight, fontStyle }
+          : element
+      );
+      setTextElements(updatedTextElements);
+      setEditingTextIndex(null); // Deselect text after update
+      setTextInput(''); // Clear input
+    }
   };
 
-  // Vertical offset for background image
-  const backgroundOffsetY = 50; // Adjust this value to move the image down
+  const handleAreaClick = (e) => {
+    if (e.target === e.currentTarget && editingTextIndex === null) {
+      // Add new text element on click if no text is being edited
+      setTextElements([
+        ...textElements,
+        { text: 'New Text', fontSize: '24px', color: '#000000', fontFamily: 'Arial', fontWeight: 'normal', fontStyle: 'normal', x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY }
+      ]);
+    }
+  };
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 p-4 border-r border-gray-200">
-        <h2 className="text-xl font-semibold mb-4">Text Editor</h2>
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
+      <div className="w-1/4 p-4 bg-white shadow-lg flex flex-col justify-between">
+        {/* Template Selection and Text Options */}
+        <div>
+          <h1 className="text-lg font-bold mb-4">Your Design</h1>
+          <hr className="mb-4" />
+          <h2 className="text-lg mb-4">Select a Template</h2>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            {/* Replace with your template images */}
+            {['certificate1.jpg', 'cr2.jpg', 'cr3.jpg', 'cr4.jpg'].map((template, index) => (
+              <div
+                key={index}
+                className={`border-2 p-2 rounded cursor-pointer ${selectedTemplate === template ? 'border-blue-900' : 'border-gray-300'}`}
+                onClick={() => setSelectedTemplate(template)}
+              >
+                <img src={template} alt={`Template ${index + 1}`} className="w-full"/>
+              </div>
+            ))}
+          </div>
           <input
+            id="text-input"
             type="text"
-            name="text"
             placeholder="Enter text"
-            value={formik.values.text}
-            onChange={formik.handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            value={textInput}
+            onChange={handleTextInputChange}
+            className="w-full p-2 mb-4 border rounded"
           />
           <button
-            type="submit"
-            className="w-full bg-green-800 text-white py-2 rounded hover:bg-blue-600"
+            className="w-full bg-green-700 text-white p-2 mb-4 rounded"
+            onClick={editingTextIndex === null ? handleAddText : handleUpdateText}
           >
-            {selectedTextId ? 'Update Text' : 'Add Text'}
+            {editingTextIndex === null ? 'Add Text' : 'Update Text'}
           </button>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Select Color:</label>
-            <input
-              type="color"
-              value={selectedColor}
-              onChange={(e) => setSelectedColor(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Font Size:</label>
+
+          <label className="block mb-2">Select Color:</label>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="w-full h-5 mb-4 rounded"
+          />
+          
+          <div className="mb-4">
+            <label className="block mb-2">Font Size:</label>
             <select
-              value={selectedFontSize}
-              onChange={(e) => setSelectedFontSize(parseInt(e.target.value))}
-              className="w-full p-2 border border-gray-300 rounded"
+              value={fontSize}
+              onChange={(e) => setFontSize(e.target.value)}
+              className="w-full p-2 border rounded"
             >
-              {[12, 16, 20, 24, 30, 36, 48, 60].map(size => (
-                <option key={size} value={size}>{size}px</option>
-              ))}
+              <option value="24px">24px</option>
+              <option value="18px">18px</option>
+              <option value="16px">16px</option>
             </select>
           </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Font Family:</label>
+          
+          <div className="mb-4">
+            <label className="block mb-2">Font Family:</label>
             <select
-              value={selectedFontFamily}
-              onChange={(e) => setSelectedFontFamily(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              value={fontFamily}
+              onChange={(e) => setFontFamily(e.target.value)}
+              className="w-full p-2 border rounded"
             >
-              {fonts.map(font => (
-                <option key={font} value={font}>{font}</option>
-              ))}
+              <option value="Arial">Arial</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Georgia">Georgia</option>
             </select>
           </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Font Weight:</label>
+          
+          <div className="mb-4">
+            <label className="block mb-2">Font Weight:</label>
             <select
-              value={selectedFontWeight}
-              onChange={(e) => setSelectedFontWeight(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              value={fontWeight}
+              onChange={(e) => setFontWeight(e.target.value)}
+              className="w-full p-2 border rounded"
             >
               <option value="normal">Normal</option>
               <option value="bold">Bold</option>
-              <option value="bolder">Bolder</option>
-              <option value="lighter">Lighter</option>
+              <option value="light">Light</option>
             </select>
           </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Font Style:</label>
+          
+          <div className="mb-4">
+            <label className="block mb-2">Font Style:</label>
             <select
-              value={selectedFontStyle}
-              onChange={(e) => setSelectedFontStyle(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              value={fontStyle}
+              onChange={(e) => setFontStyle(e.target.value)}
+              className="w-full p-2 border rounded"
             >
               <option value="normal">Normal</option>
               <option value="italic">Italic</option>
-              <option value="oblique">Oblique</option>
             </select>
           </div>
-        </form>
 
-        <h2 className="text-xl font-semibold mt-6 mb-4"></h2>
-        <label className="w-full flex justify-center items-center border border-gray-300 rounded p-2 cursor-pointer bg-green-800 hover:bg-yellow-600">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-          <span className="text-white-700">Upload Image</span>
-        </label>
+          {/* QR Code Section */}
+          <div className="mb-4">
+            <label className="block mb-2">QR Code Text:</label>
+            <input
+              type="text"
+              placeholder="Enter text for QR Code"
+              value={qrCodeText}
+              onChange={handleQRCodeTextChange}
+              className="w-full p-2 mb-4 border rounded"
+            />
+            {showQRCode && (
+              <QRCode value={qrCodeText} size={100} />
+            )}
+          </div>
+          
+          <label className="block mb-2">Upload Logo:</label>
+          <input type="file" onChange={handleLogoUpload} className="mb-4" />
+          
+          <button
+            className="w-full bg-green-700 text-white p-2 rounded"
+            onClick={handleSaveCertificate}
+          >
+            Save Certificate
+          </button>
 
-        <h2 className="text-xl font-semibold mt-6 mb-4"> </h2>
-        <div className="flex space-x-4">
-          <button
-            onClick={() => handleScaleChange(0.1)}
-            className="bg-green-800 text-white py-2 px-4 rounded hover:bg-yellow-600"
-          >
-            Zoom In +
-          </button>
-          <button
-            onClick={() => handleScaleChange(-0.1)}
-            className="bg-green-800 text-white py-2 px-4 rounded hover:bg-yellow-600"
-          >
-            Zoom Out -
-          </button>
+          {/* Zoom Controls */}
+          <div className="flex justify-between mt-4">
+            <button
+              className="bg-green-700 text-white p-4 w-1/2 mx-2 rounded"
+              onClick={() => handleZoom('in')}
+            >
+              Zoom Out
+            </button>
+            <button
+              className="bg-green-700 text-white p-4 w-1/2 mx-2 rounded"
+              onClick={() => handleZoom('out')}
+            >
+              Zoom In
+            </button>
+          </div>
         </div>
-
-        <button
-          onClick={handleSave}
-          className="w-full bg-green-800 text-white py-2 mt-4 rounded hover:bg-green-700"
-        >
-          Save Certificate
-        </button>
       </div>
 
-      {/* Canvas area */}
-      <div className="flex-1 p-4">
-        <Stage
-          width={sizes[selectedSize].width * MM_TO_PX * scale}
-          height={sizes[selectedSize].height * MM_TO_PX * scale}
-          ref={stageRef}
-          className="border border-gray-300"
-          scaleX={scale}
-          scaleY={scale}
+      {/* Certificate Area */}
+      <div
+        className="flex-1 flex justify-center items-center p-4"
+        onClick={handleAreaClick}
+        ref={certificateAreaRef}
+      >
+        <div
+          id="certificate-area"
+          className="relative border border-gray-400 bg-white"
+          style={{ width: '800px', height: '600px', transform: `scale(${scale})` }}
         >
-          <Layer>
-            {backgroundImage && (
-              <Image
-                image={backgroundImage}
-                x={(sizes[selectedSize].width * MM_TO_PX * scale - sizes[selectedSize].width * MM_TO_PX) / 2}
-                y={((sizes[selectedSize].height * MM_TO_PX * scale - sizes[selectedSize].height * MM_TO_PX) / 2) + backgroundOffsetY}
-                width={sizes[selectedSize].width * MM_TO_PX}
-                height={sizes[selectedSize].height * MM_TO_PX}
+          {selectedTemplate && (
+            <img
+              src={selectedTemplate}
+              alt="Certificate Template"
+              className="absolute top-0 left-0 w-full h-full object-cover"
+            />
+          )}
+          {logo && (
+            <Rnd
+              default={{
+                x: 10,
+                y: 10,
+                width: 100,
+                height: 100
+              }}
+              bounds="parent"
+            >
+              <img
+                src={logo}
+                alt="Logo"
+                style={{ width: '100%', height: 'auto' }}
               />
-            )}
-          </Layer>
-          <Layer>
-            {textItems.map((item) => (
-              <Text
-                key={item.id}
-                text={item.text}
-                x={item.x}
-                y={item.y}
-                fontSize={item.fontSize}
-                fill={item.fill}
-                fontFamily={item.fontFamily}
-                fontWeight={item.fontWeight}
-                fontStyle={item.fontStyle}
-                draggable
-                onClick={() => handleTextClick(item.id)}
-                onDragEnd={(e) => handleDragEnd(item.id, e)}
-              />
-            ))}
-            {imageItems.map((item) => (
-              <React.Fragment key={item.id}>
-                <Image
-                  image={item.image}
-                  x={item.x}
-                  y={item.y}
-                  width={item.width}
-                  height={item.height}
-                  draggable
-                  onClick={() => handleImageClick(item.id)}
-                  onDragEnd={(e) => handleImageDragEnd(item.id, e)}
-                />
-                {selectedImageId === item.id && (
-                  <Transformer
-                    ref={transformerRef}
-                    boundBoxFunc={(oldBox, newBox) => {
-                      handleImageResize(item.id, newBox.width, newBox.height);
-                      return newBox;
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </Layer>
-        </Stage>
+            </Rnd>
+          )}
+          {textElements.map((element, index) => (
+            <Rnd
+              key={index}
+              default={{
+                x: element.x,
+                y: element.y,
+                width: 200,
+                height: 50
+              }}
+              bounds="parent"
+              onDragStop={(e, d) => {
+                const updatedElements = textElements.map((el, i) =>
+                  i === index ? { ...el, x: d.x, y: d.y } : el
+                );
+                setTextElements(updatedElements);
+              }}
+              onResizeStop={(e, direction, ref, delta, position) => {
+                const updatedElements = textElements.map((el, i) =>
+                  i === index
+                    ? {
+                        ...el,
+                        width: ref.offsetWidth,
+                        height: ref.offsetHeight,
+                        x: position.x,
+                        y: position.y,
+                      }
+                    : el
+                );
+                setTextElements(updatedElements);
+              }}
+            >
+              <div
+                className="absolute p-2 cursor-pointer"
+                style={{
+                  fontSize: element.fontSize,
+                  color: element.color,
+                  fontFamily: element.fontFamily,
+                  fontWeight: element.fontWeight,
+                  fontStyle: element.fontStyle,
+                }}
+                onClick={() => handleTextClick(index)}
+              >
+                {element.text}
+              </div>
+            </Rnd>
+          ))}
+          {showQRCode && (
+            <Rnd
+              default={{
+                x: 10,
+                y: 10,
+                width: 100,
+                height: 100
+              }}
+              bounds="parent"
+            >
+              <div className="absolute bottom-4 right-4">
+                <QRCode value={qrCodeText} size={100} />
+              </div>
+            </Rnd>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default CertificateEditor;
+export default CertificateDesigner;

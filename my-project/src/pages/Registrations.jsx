@@ -69,8 +69,6 @@
 
 // export default Contact;
 // eslint-disable-next-line no-unused-vars
-
-
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -94,10 +92,10 @@ function Contact() {
 
     // Send data to the PHP backend
     try {
-      const response = await fetch('https://certificatemakerapp-com.stackstaging.com/api/ourProject/login.php', {
+      const response = await fetch('http://localhost/certificate/login.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'  // Set content type as JSON
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)  // Send the data as JSON
       });
