@@ -1,18 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import MyForm from '../components/Form2';
+import ContentForm from '../components/Form2';
 
-function form2() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { id } = useParams(); 
+function Integrations() {
+    const { id } = useParams(); // Get the ID from the URL
 
-  return (
-    <>
-      <MyForm />
-      <p> {id}</p> {}
-    </>
-  );
+    return (
+        <>
+            <ContentForm id={id} /> {/* Pass the ID as a prop */}
+        </>
+    );
 }
 
-export default form2;
+export default Integrations;

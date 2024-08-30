@@ -16,7 +16,7 @@ function TemplatesDisplay() {
     };
 
     useEffect(() => {
-        fetch(`http://localhost/certificate/getTemplate.php?institutions_id=${institutions_id}`)
+        fetch(`http://localhost/certificate/getTemplate.php?institutions_id=${1}`)
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {

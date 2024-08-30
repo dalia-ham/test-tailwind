@@ -33,7 +33,7 @@ function Navbar() {
             <Link to="/Integrations" className="text-white hover:text-cyan-300"></Link>
           </li>
           <li>
-            <Link to="/Pathways" className="text-white hover:text-cyan-300"></Link>
+            <Link to="/Pathways" className="text-white hover:text-cyan-300">5</Link>
           </li>
         </ul>
       </div>

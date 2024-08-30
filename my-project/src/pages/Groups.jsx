@@ -9,6 +9,10 @@ function CredentialButtons() {
     const [newCredential, setNewCredential] = useState({
         text: '',
         imgSrc: '',
+        identifier: '',
+        coursewebsite: '',
+        description: '',
+        category: ''
     });
     const [credentials, setCredentials] = useState([]);
 
@@ -17,7 +21,7 @@ function CredentialButtons() {
             .then(response => response.json())
             .then(data => {
                 const formattedData = data.map(item => ({
-                    id: item.id, // الحفاظ على المعرف الفريد للمؤسسة
+                    id: item.id, // استخدام credinatail_id 
                     imgSrc: item.photo, // استخدام رابط الصورة
                     text: item.institutionName,
                     color: getRandomGreenColor()
@@ -64,6 +68,10 @@ function CredentialButtons() {
         const formData = new FormData();
         formData.append('institutionName', newCredential.text);
         formData.append('photo', document.querySelector('input[type="file"]').files[0]);
+        formData.append('identifier', newCredential.identifier);
+        formData.append('coursewebsite', newCredential.coursewebsite);
+        formData.append('description', newCredential.description);
+        formData.append('category', newCredential.category);
 
         fetch('http://localhost/certificate/insert.php', {
             method: 'POST',
@@ -72,13 +80,13 @@ function CredentialButtons() {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    const newId = credentials.length + 1; // استخدام الطول كمعرف جديد
+                    const newId = credentials.length + 1;
                     const newColor = getRandomGreenColor();
                     setCredentials(prevCredentials => [
                         ...prevCredentials,
                         { ...newCredential, id: newId, color: newColor }
                     ]);
-                    setNewCredential({ text: '', imgSrc: '' });
+                    setNewCredential({ text: '', imgSrc: '', identifier: '', coursewebsite: '', description: '', category: '' });
                     setShowForm(false);
                 } else {
                     console.error('Error adding credential:', data.message);
@@ -87,9 +95,10 @@ function CredentialButtons() {
             .catch(error => console.error('Error:', error));
     };
 
-    const handleCredentialClick = (institutions_id) => {
-        navigate(`/templates/${institutions_id}`);
+    const handleCredentialClick = (id) => {
+        navigate(`/Integrations/${id}`);
     };
+    
 
     return (
         <div className="flex flex-col items-center h-screen bg-cover bg-center bg-no-repeat bg-gray-100" style={{ backgroundImage: 'url(/background0.jpg)' }}>
@@ -139,6 +148,49 @@ function CredentialButtons() {
                                     type="text"
                                     name="text"
                                     value={newCredential.text}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="mt-1 p-2 text-base border border-gray-300 rounded bg-gray-200 w-full text-green-900"
+                                />
+                            </label>
+                            <label className="mb-2 text-lg text-green-900 font-bold">
+                                Identifier:
+                                <input
+                                    type="text"
+                                    name="identifier"
+                                    value={newCredential.identifier}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="mt-1 p-2 text-base border border-gray-300 rounded bg-gray-200 w-full text-green-900"
+                                />
+                            </label>
+                            <label className="mb-2 text-lg text-green-900 font-bold">
+                                Course Website:
+                                <input
+                                    type="text"
+                                    name="coursewebsite"
+                                    value={newCredential.coursewebsite}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="mt-1 p-2 text-base border border-gray-300 rounded bg-gray-200 w-full text-green-900"
+                                />
+                            </label>
+                            <label className="mb-2 text-lg text-green-900 font-bold">
+                                Description:
+                                <textarea
+                                    name="description"
+                                    value={newCredential.description}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="mt-1 p-2 text-base border border-gray-300 rounded bg-gray-200 w-full text-green-900"
+                                />
+                            </label>
+                            <label className="mb-2 text-lg text-green-900 font-bold">
+                                Category:
+                                <input
+                                    type="text"
+                                    name="category"
+                                    value={newCredential.category}
                                     onChange={handleInputChange}
                                     required
                                     className="mt-1 p-2 text-base border border-gray-300 rounded bg-gray-200 w-full text-green-900"

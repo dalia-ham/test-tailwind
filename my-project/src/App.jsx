@@ -48,9 +48,7 @@
 
 //import { Routes, Route } from 'react-router-dom';
 
-
 import Navbar from './components/Navbar';
-
 import Home from './pages/home';
 import Contact from './pages/Registrations';
 import Analystics from './pages/Analistics';
@@ -58,17 +56,15 @@ import Credentials from './pages/Credintials';
 import Emails from './pages/Emails';
 import Groups from './pages/Groups';
 import SignUp from './pages/SignUp';
-import Integrations from './pages/Integrations';
+import ContentForm from './pages/Integrations';
 import Pathways from './pages/Pathways';
 import CertificateEditor from './pages/CertificateEditor';
-import CredentialForm from './pages/credantial2';  // تأكد من استخدام الاسم الصحيح
+import CredentialForm from './pages/credantial2'; 
 import CertificatePreview from './pages/CertificatePreview';
-// eslint-disable-next-line no-unused-vars
 import { CertificateProvider } from './CertificateContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TemplateSelection from './pages/TemplateSelection';
 import TemplatesDisplay from './pages/TemplatesDisplay';
-
 
 function App() {
   return (
@@ -82,18 +78,17 @@ function App() {
         <Route path="/Designs" element={<CertificateEditor />} />
         <Route path="/Emails" element={<Emails />} />
         <Route path="/Groups" element={<Groups />} />
-        <Route path="/Integrations" element={<Integrations />} />
+        <Route path="/Integrations/:id" element={<ContentForm />} />
         <Route path="/Pathways" element={<Pathways />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/CredentialForm" element={<CredentialForm />} />  {}
-        <Route path="/pathways/:id" element={<Pathways />} />
-        <Route path="/certificate-preview" element={<CertificatePreview />} />
-        <Route path="/template-selection" element={<TemplateSelection />} />
-        <Route path="/templates/:institutions_id" element={<TemplatesDisplay />} /> {/* إضافة مسار عرض القوالب */}
+        <Route path="/CredentialForm" element={<CredentialForm />} />
+        <Route path="/certificate-preview" element={<CertificatePreview />} />
+        <Route path="/template-selection" element={<TemplateSelection />} />
+        <Route path="/templates/:id" element={<TemplatesDisplay />} />
       </Routes>
-      <h1 className="text-3xl font-bold underline text-amber-500"></h1>
-    </CertificateProvider >
+    </CertificateProvider>
   );
 }
 
 export default App;
+
