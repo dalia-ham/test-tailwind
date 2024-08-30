@@ -1,10 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Form = () => {
   const [records, setRecords] = useState([{ name: '', email: '', issueDate: '' }]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { templateSrc } = location.state || { templateSrc: '' };
 
   const addRecord = () => {
     setRecords([...records, { name: '', email: '', issueDate: '' }]);
@@ -17,7 +19,7 @@ const Form = () => {
   };
 
   const handleCreate = () => {
-    navigate('/credential2', { state: { records } });
+    navigate('/CredentialForm', { state: { records, templateSrc } });
   };
 
   return (
@@ -109,4 +111,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Form;

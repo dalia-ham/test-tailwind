@@ -1,25 +1,31 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-// eslint-disable-next-line no-unused-vars
-import MyForm from '../components/GroupForm';
-
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CredentialButtons() {
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [newCredential, setNewCredential] = useState({
-        id: '',
-        imgSrc: '',
         text: '',
-        color: '#007bff'
+        imgSrc: '',
     });
-    const [credentials, setCredentials] = useState([
-        { id: 'button1', imgSrc: '/image3.png', text: 'Course completion certificate', color: '#D9DAD9' },
-        { id: 'button2', imgSrc: '/image.png', text: 'Certificate of appreciation', color: '#68A4A5' },
-        { id: 'button3', imgSrc: '/image2.png', text: 'Volunteer work certificate', color: '#4C8055' },
-    ]);
+    const [credentials, setCredentials] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost/certificate/fetch.php')
+            .then(response => response.json())
+            .then(data => {
+                const formattedData = data.map(item => ({
+                    id: item.id, // الحفاظ على المعرف الفريد للمؤسسة
+                    imgSrc: item.photo, // استخدام رابط الصورة
+                    text: item.institutionName,
+                    color: getRandomGreenColor()
+                }));
+                setCredentials(formattedData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
 
     const filteredCredentials = credentials.filter(credential =>
         credential.text.toLowerCase().includes(searchQuery.toLowerCase())
@@ -47,39 +53,61 @@ function CredentialButtons() {
         }
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        const newId = `button${credentials.length + 1}`;
-        setCredentials(prevCredentials => [
-            ...prevCredentials,
-            { ...newCredential, id: newId }
-        ]);
-        setNewCredential({ id: '', imgSrc: '', text: '', color: '#007bff' });
-        setShowForm(false);
+    const getRandomGreenColor = () => {
+        const greenShades = ['#4CAF50', '#8BC34A', '#388E3C', '#43A047', '#66BB6A', '#81C784', '#A5D6A7'];
+        return greenShades[Math.floor(Math.random() * greenShades.length)];
     };
 
-    // Handle credential button click
-    const handleCredentialClick = () => {
-        navigate('/Emails'); // Navigate to GroupForm page
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('institutionName', newCredential.text);
+        formData.append('photo', document.querySelector('input[type="file"]').files[0]);
+
+        fetch('http://localhost/certificate/insert.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const newId = credentials.length + 1; // استخدام الطول كمعرف جديد
+                    const newColor = getRandomGreenColor();
+                    setCredentials(prevCredentials => [
+                        ...prevCredentials,
+                        { ...newCredential, id: newId, color: newColor }
+                    ]);
+                    setNewCredential({ text: '', imgSrc: '' });
+                    setShowForm(false);
+                } else {
+                    console.error('Error adding credential:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    };
+
+    const handleCredentialClick = (institutions_id) => {
+        navigate(`/templates/${institutions_id}`);
     };
 
     return (
         <div className="flex flex-col items-center h-screen bg-cover bg-center bg-no-repeat bg-gray-100" style={{ backgroundImage: 'url(/background0.jpg)' }}>
-            <h1 className="text-xl font-cursive mb-4 text-gray-800 mt-16">Credential</h1>
+            <h1 className="text-3xl font-bold italic mb-6 text-gray-800 mt-32">Credential</h1>
             <input
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="mb-4 mt-8 p-3 text-lg border border-green-700 rounded bg-white max-w-md w-full"
+                className="mb-4 mt-8 p-3 text-lg border border-green-700 rounded bg-white max-w-md w-full mt-16"
             />
-            <div className="flex flex-wrap justify-center gap-12">
+            <div className="flex flex-wrap justify-center gap-12 ">
                 {filteredCredentials.map((credential) => (
                     <button
                         key={credential.id}
                         className="flex flex-col items-center justify-center p-6 border-none rounded-lg text-xl font-bold text-gray-900 w-52 h-52 transition-transform transform hover:scale-105 hover:shadow-lg"
                         style={{ backgroundColor: credential.color }}
-                        onClick={() => handleCredentialClick(credential.id)} // Add onClick handler
+                        onClick={() => handleCredentialClick(credential.id)} // تمرير معرف المؤسسة
                     >
                         <img src={credential.imgSrc} alt={credential.text} className="w-20 h-16 mb-2" />
                         <span>{credential.text}</span>
@@ -93,7 +121,6 @@ function CredentialButtons() {
                 Add New Credential
             </button>
 
-            {/* Dialog Modal */}
             {showForm && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
                     <div className="bg-white p-6 rounded-lg max-w-md w-full relative">
@@ -125,16 +152,6 @@ function CredentialButtons() {
                                     accept="image/*"
                                     required
                                     className="mt-1 p-2 border border-gray-300 rounded bg-gray-200 w-full"
-                                />
-                            </label>
-                            <label className="mb-2 text-lg text-green-900 font-bold">
-                                Button Color:
-                                <input
-                                    type="color"
-                                    name="color"
-                                    value={newCredential.color}
-                                    onChange={handleInputChange}
-                                    className="mt-1 p-2 border-none rounded w-full"
                                 />
                             </label>
                             <div className="flex justify-between mt-3">
