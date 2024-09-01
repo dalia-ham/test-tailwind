@@ -9,7 +9,7 @@ function Pathways() {
   return (
     <>
       <MyForm />
-      <p>{id}</p> {/* عرض المعرف */}
+      <p></p> {/* عرض المعرف */}
     </>
   );
 }

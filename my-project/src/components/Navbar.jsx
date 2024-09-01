@@ -7,19 +7,27 @@ function Navbar() {
       <div className="flex justify-between items-center">
         {/* Log in link on the left */}
         <div className="flex-none">
-          <Link to="/Registrations" className="text-white hover:text-cyan-300">Log in</Link>
+          <Link to="/InitialView" className="text-white hover:text-cyan-300">*</Link>
         </div>
 
         {/* Centered links */}
+        
         <ul className="flex space-x-4 justify-center flex-grow">
           <li>
             <Link to="/" className="text-white hover:text-cyan-300">Home</Link>
           </li>
           
+        
+
           <li>
             <Link to="/Credintials" className="text-white hover:text-cyan-300">Designs</Link>
           </li>
-          
+
+          <li>
+            <Link to="/Analistics" className="text-white hover:text-cyan-300"></Link>
+          </li>
+
+      
           <li>
             <Link to="/Designs" className="text-white hover:text-cyan-300"></Link>
           </li>
@@ -33,7 +41,7 @@ function Navbar() {
             <Link to="/Integrations" className="text-white hover:text-cyan-300"></Link>
           </li>
           <li>
-            <Link to="/Pathways" className="text-white hover:text-cyan-300">5</Link>
+            <Link to="/Pathways" className="text-white hover:text-cyan-300"></Link>
           </li>
         </ul>
       </div>

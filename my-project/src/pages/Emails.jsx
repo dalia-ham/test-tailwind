@@ -29,7 +29,7 @@ const Form = () => {
         <h1 className="text-2xl font-semibold">Create Credentials for CWDC</h1>
         <div className="flex mt-4">
           <div className="flex items-center">
-            <span className="px-4 py-2 bg-blue-100 text-blue-600 rounded-full">1 - Fill Data</span>
+            <span className="px-4 py-2 bg-green-100 text-green-600 rounded-full">1 - Fill Data</span>
           </div>
           <div className="flex items-center ml-6">
             <span className="px-4 py-2 bg-gray-200 text-gray-600 rounded-full">2 - Summary</span>
@@ -89,7 +89,7 @@ const Form = () => {
 
         <button
           onClick={addRecord}
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+          className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
         >
           + Add record
         </button>
@@ -102,7 +102,7 @@ const Form = () => {
         </button>
         <button
           onClick={handleCreate}
-          className="bg-blue-600 text-white py-2 px-4 rounded"
+          className="bg-green-600 text-white py-2 px-4 rounded"
         >
           Create
         </button>
@@ -111,4 +111,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Form;

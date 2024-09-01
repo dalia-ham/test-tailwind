@@ -94,7 +94,7 @@ const CertificateDesigner = () => {
                 formData.append('template_photo', blob);
                 formData.append('institutions_id', JSON.stringify(selectedInstitutions));
 
-                fetch('http://localhost/Training_project/save_template.php', {
+                fetch('http://localhost/certificate/save_template.php', {
                     method: 'POST',
                     body: formData,
                 })
@@ -177,7 +177,7 @@ const CertificateDesigner = () => {
           <h2 className="text-lg font-semibold">Templates</h2>
         </div>
         <div className="grid grid-cols-2 gap-2 mb-4">
-          {['certificate1.jpg', 'cr2.jpg', 'cr3.jpg', 'cr4.jpg'].map((template, index) => (
+          {[ './cer02.jpg', './cer03.jpg', './cr3.jpg' , './cer06.jpg'].map((template, index) => (
             <div
               key={index}
               className={`border-2 p-2 rounded cursor-pointer ${selectedTemplate === template ? 'border-blue-900' : 'border-gray-300'}`}
@@ -218,7 +218,7 @@ const CertificateDesigner = () => {
           className="w-full h-5 mb-4 rounded"
         />
 
-      <div className="mb-4">
+<div className="mb-4">
           <label className="block mb-2">Font Family:</label>
           <select
             value={fontFamily}
@@ -228,6 +228,9 @@ const CertificateDesigner = () => {
             <option value="Arial">Arial</option>
             <option value="Times New Roman">Times New Roman</option>
             <option value="Georgia">Georgia</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Courier New">Courier New</option>
           </select>
         </div>
 
@@ -241,6 +244,12 @@ const CertificateDesigner = () => {
             <option value="24px">24px</option>
             <option value="18px">18px</option>
             <option value="16px">16px</option>
+            <option value="36px">36px</option>
+            <option value="48px">48px</option>
+            <option value="60px">60px</option>
+            <option value="72px">72px</option>
+            <option value="84px">84px</option>
+            <option value="96px">96px</option>
           </select>
         </div>
         <div className="mb-4">
@@ -252,7 +261,8 @@ const CertificateDesigner = () => {
           >
             <option value="normal">Normal</option>
             <option value="bold">Bold</option>
-            <option value="light">Light</option>
+            <option value="bolder">Bolder</option>
+            <option value="lighter">Lighter</option>
           </select>
         </div>
 
@@ -265,6 +275,7 @@ const CertificateDesigner = () => {
           >
             <option value="normal">Normal</option>
             <option value="italic">Italic</option>
+            <option value="oblique">Oblique</option>
           </select>
         </div>
 
