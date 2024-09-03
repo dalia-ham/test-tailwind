@@ -177,7 +177,7 @@ const CertificateDesigner = () => {
           <h2 className="text-lg font-semibold">Templates</h2>
         </div>
         <div className="grid grid-cols-2 gap-2 mb-4">
-          {[ './cer02.jpg', './cer03.jpg', './cr3.jpg' , './cer06.jpg'].map((template, index) => (
+          {[ './certificate1.jpg', './cr4.jpg', './cr3.jpg' , './cr2.jpg'].map((template, index) => (
             <div
               key={index}
               className={`border-2 p-2 rounded cursor-pointer ${selectedTemplate === template ? 'border-blue-900' : 'border-gray-300'}`}

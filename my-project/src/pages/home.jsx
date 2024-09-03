@@ -409,12 +409,12 @@ function Home() {
                   <td className="py-2 px-4">{credential.Issue_Date}</td>
                   <td className="py-2 px-4">{credential.Expiry_Date}</td>
                   <td className="py-2 px-4">
-                    <button
+                    {/* <button
                       onClick={() => handleOpen(credential.Credential_ID)}
                       className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
                     >
                       Open
-                    </button>
+                    </button> */}
                     <button
                       onClick={handlePDFClick}
                       className="bg-gray-500 text-white px-4 py-2 rounded-md"
